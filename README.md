@@ -1,0 +1,2 @@
+# AbsLog
+powerful logging library
