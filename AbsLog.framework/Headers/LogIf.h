@@ -123,7 +123,8 @@ typedef struct
 #define LOG_OBJC_IF(condition, LogCategory, object) \
 	if (condition) { \
 		NSObject * abs_log_data = (object); /* check for correct argument type */ \
-		_ABS_LOG(LogDataObjDescr, LogCategory, abs_log_data); \
+        const void * abs_log_d = objc_unretainedPointer(abs_log_data); \
+		_ABS_LOG(LogDataObjDescr, LogCategory, abs_log_d); \
 	} else _ABS_POSSIBLE_LOG()
 		
 #define LOG_OS_STATUS_FAIL(LogCategory, os_status) \
@@ -284,7 +285,7 @@ namespace std {
 class LogableObj {
 public:
     virtual void get_description(std::ostream & out_stream) const = 0;
-    virtual ~LogableObj() {};
+    virtual ~LogableObj() {}
 };
 
 #endif // c++

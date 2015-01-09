@@ -9,11 +9,18 @@ ABS_HEADER_CPP_BEGIN
 
 #include <pthread.h>
 #include <string>
-#if __cplusplus < 201103L
-#include <tr1/memory>
-#else // __cplusplus >= 201103L
-STOP_COMPILE_CPP_IF(1, let_me_know_when_default_compiler_changed);
-#endif // __cplusplus >= 201103L
+#include <cstddef> // for __GLIBCXX__
+
+class AutoLogFile;
+#ifdef __GLIBCXX__
+#  include <tr1/memory>
+typedef std::tr1::shared_ptr<const std::string> shared_ptr2str;
+typedef std::tr1::shared_ptr<AutoLogFile> shared_ptr2file;
+#else
+#  include <memory>
+typedef std::shared_ptr<const std::string> shared_ptr2str;
+typedef std::shared_ptr<AutoLogFile> shared_ptr2file;
+#endif
 
 class AutoLogFile {
     FILE * openedFile;

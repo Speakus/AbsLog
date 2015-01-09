@@ -36,6 +36,5 @@ typedef int AbsLogHookPriorityT;
 typedef bool (*shouldStopAnyOtherHook)(SOURCE_LOG_T log_source, LogCategoryT LogCategory, const char * error_data);
 ABS_EXTERN_C absStatusT setupLogHook(AbsLogCategoryBitT categories, AbsLogHookPriorityT priority, shouldStopAnyOtherHook hook);
 ABS_EXTERN_C absStatusT clearLogHook(shouldStopAnyOtherHook hook);
-ABS_EXTERN_C void callAllLogHooks(SOURCE_LOG_T log_source, LogCategoryT LogCategory, const char * error_data);
 
 ABS_HEADER_C_END

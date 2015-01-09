@@ -1,11 +1,12 @@
 Pod::Spec.new do |s|
   s.name         = 'AbsLog'
-  s.version      = '1.0.9174'
+  s.version      = '1.1.9184'
   s.summary      = 'Logging framework'
   s.description  = <<-DESC
                    look AbsLog.h + AbsLogRequiredExternalSymbols.h
                    for API detail
                    DESC
+  s.homepage     = 'https://github.com/Speakus/AbsLog'
   s.license      = 'MIT'
   s.author       = { 'Maxim Nikolaevich' => 'www.speakus.net' }
   s.platform     = :ios, '3.1'
