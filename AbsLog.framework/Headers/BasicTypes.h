@@ -72,7 +72,7 @@ ABS_HEADER_C_BEGIN
     static type & variable = *new type args
 
 // NULL is not allowed in params
-#define ABS_ATTR_NOT_NULL __attribute__((nonnull))
+#define ABS_ATTR_NOT_NULL(...) __attribute__((nonnull(__VA_ARGS__)))
 // only for ... in params
 #define ABS_ATTR_END_WITH_NULL __attribute__((sentinel))
 // https://gcc.gnu.org/wiki/Visibility

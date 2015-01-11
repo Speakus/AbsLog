@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'AbsLog'
-  s.version      = '1.1.9184'
+  s.version      = '1.2.9188'
   s.summary      = 'Logging framework'
   s.description  = <<-DESC
                    look AbsLog.h + AbsLogRequiredExternalSymbols.h
