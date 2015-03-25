@@ -12,9 +12,9 @@ ABS_EXTERN_C const char * resolve_file_name_if_possible(SOURCE_LOG_T log_source)
 typedef void (*AbsLogGetUtFunc)(absUtFunc * utFuncArray);
 
 typedef struct {
-	FILE_IDX_T		file_index;
-	const char		* file_name;
-	AbsLogGetUtFunc	ut_get_callback; // NULL is not allowed
+    FILE_IDX_T      file_index;
+    const char      * file_name;
+    AbsLogGetUtFunc ut_get_callback; // NULL is not allowed
 } AbsUtFilesT;
 
 struct AbsLogLibFilesStruct {

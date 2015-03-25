@@ -23,11 +23,11 @@
 ABS_HEADER_C_BEGIN
 
 #ifdef __OBJC__
-    #define ABS_HEADER_OBJC_BEGIN	ABS_HEADER_C_BEGIN
-    #define ABS_HEADER_OBJC_END		ABS_HEADER_C_END
+    #define ABS_HEADER_OBJC_BEGIN   ABS_HEADER_C_BEGIN
+    #define ABS_HEADER_OBJC_END     ABS_HEADER_C_END
 #else // !__OBJC__
-    #define ABS_HEADER_OBJC_BEGIN	typedef int header_only_for_objc[-1];
-    #define ABS_HEADER_OBJC_END		typedef int header_only_for_objc[-1];
+    #define ABS_HEADER_OBJC_BEGIN   typedef int header_only_for_objc[-1];
+    #define ABS_HEADER_OBJC_END     typedef int header_only_for_objc[-1];
 #endif // !__OBJC__
 
 #ifdef __cplusplus
@@ -35,24 +35,24 @@ ABS_HEADER_C_BEGIN
     #define ABS_LOCAL_EXTERN_CPP  extern  ABS_ATTR_VISIBILITY(hidden)
     #define ABS_EXTERN_C extern "C" ABS_ATTR_VISIBILITY(default)
     #define ABS_EXTERN_CPP  extern  ABS_ATTR_VISIBILITY(default)
-    #define ABS_HEADER_CPP_BEGIN	ABS_PRAGMA(once);
+    #define ABS_HEADER_CPP_BEGIN    ABS_PRAGMA(once);
     #define ABS_HEADER_CPP_END
 #else
     #define ABS_LOCAL_EXTERN_C extern ABS_ATTR_VISIBILITY(hidden)
     #define ABS_LOCAL_EXTERN_CPP typedef int only_for_cpp[-1];
     #define ABS_EXTERN_C extern ABS_ATTR_VISIBILITY(default)
     #define ABS_EXTERN_CPP typedef int only_for_cpp[-1];
-    #define ABS_HEADER_CPP_BEGIN	typedef int header_only_for_cpp[-1];
-    #define ABS_HEADER_CPP_END		typedef int header_only_for_cpp[-1];
+    #define ABS_HEADER_CPP_BEGIN    typedef int header_only_for_cpp[-1];
+    #define ABS_HEADER_CPP_END      typedef int header_only_for_cpp[-1];
 #endif //__cplusplus
 
 #if (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0) && defined(__clang__)
-    #define NEW_AUTORELEASE_POOL_BEGIN()	@autoreleasepool { DO_NOTHING()
-    #define NEW_AUTORELEASE_POOL_END()		} DO_NOTHING()
+    #define NEW_AUTORELEASE_POOL_BEGIN()    @autoreleasepool { DO_NOTHING()
+    #define NEW_AUTORELEASE_POOL_END()      } DO_NOTHING()
 #else
-    #define NEW_AUTORELEASE_POOL_BEGIN()	NSAutoreleasePool *dontUseThisVarDirectly = \
+    #define NEW_AUTORELEASE_POOL_BEGIN()    NSAutoreleasePool *dontUseThisVarDirectly = \
                                                 [[NSAutoreleasePool alloc] init]; { DO_NOTHING()
-    #define NEW_AUTORELEASE_POOL_END()		} [dontUseThisVarDirectly drain]/* release is no-op in GC */
+    #define NEW_AUTORELEASE_POOL_END()      } [dontUseThisVarDirectly drain]/* release is no-op in GC */
 #endif
 
 //simple macros for do nothing (requires semicolon at end of macros)
@@ -96,9 +96,9 @@ ABS_HEADER_C_BEGIN
 
 typedef enum
 {
-	absBoolFalse	= false,
-	absBoolTrue		= true,
-	absBoolMaybe	= -1,
+    absBoolFalse    = false,
+    absBoolTrue     = true,
+    absBoolMaybe    = -1,
 } absBoolT; // use this type only if absBoolMaybe required for you
 
 static inline bool isAbsBoolMaybe(absBoolT value) {
@@ -107,15 +107,15 @@ static inline bool isAbsBoolMaybe(absBoolT value) {
 }
 
 enum {
-	AbsEnum_SPECIAL = 0x7FFFFFFE,
-	AbsEnum_INVALID = 0x7FFFFFFF
+    AbsEnum_SPECIAL = 0x7FFFFFFE,
+    AbsEnum_INVALID = 0x7FFFFFFF
 };
 typedef unsigned AbsEnumT;
 
 enum {
-	MAX_SOURCE_LINES_ALLOWED	= 1000,
-	MAX_FILES_ALLOWED			= 1000,
-	ABS_UT_MAX_POSSIBLE_TESTS_PER_FILE = 100,
+    MAX_SOURCE_LINES_ALLOWED    = 1000,
+    MAX_FILES_ALLOWED           = 1000,
+    ABS_UT_MAX_POSSIBLE_TESTS_PER_FILE = 100,
 };
 
 ABS_HEADER_C_END

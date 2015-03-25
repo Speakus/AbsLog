@@ -11,7 +11,7 @@ ABS_HEADER_OBJC_BEGIN
 
 ABS_ATTR_VISIBILITY(default) @interface ConvertAnyMessageToException : NSObject
 {
-	int		preventedRelease;
+    int     preventedRelease;
 }
 + (id)sharedInstance;
 + (void)exceptionOnControlEvents:(UIControl *)control removeTarget:(id)oldTarget;

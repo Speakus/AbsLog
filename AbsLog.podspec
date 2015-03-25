@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'AbsLog'
-  s.version      = '1.2.9188'
+  s.version      = '1.3.9268'
   s.summary      = 'Logging framework'
   s.description  = <<-DESC
                    look AbsLog.h + AbsLogRequiredExternalSymbols.h
@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/Speakus/AbsLog'
   s.license      = 'MIT'
   s.author       = { 'Maxim Nikolaevich' => 'www.speakus.net' }
+  s.source       = { :git => 'https://github.com/Speakus/AbsLog' }
   s.platform     = :ios, '3.1'
   s.frameworks   = 'UIKit', 'Foundation'
   s.ios.vendored_frameworks = 'AbsLog.framework'

@@ -16,8 +16,8 @@ ABS_UT_CODE_FILE_BEGIN_WITH_IDX(AbsLogFiles);
 #undef AbsLogFileMemberSeparator
 
 void AbsLogFileMember_TestFunc(_MAX, LIB_ID)(absUtFunc * funcs) {
-	LOG_IF(1, LogCategoryError);
-	*funcs = NULL;
+    LOG_IF(1, LogCategoryError);
+    *funcs = NULL;
 }
 
 #if defined(DEBUG) && (DEBUG > 0)

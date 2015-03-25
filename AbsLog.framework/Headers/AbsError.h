@@ -8,8 +8,8 @@
 ABS_HEADER_OBJC_BEGIN
 
 @interface NSError (AbsaltExtension)
-+ (id)errorWithError:(NSError*)error AbsStatus:(absStatusT)absStatusArg;
-+ (NSError*)errorWithAbsStatus:(absStatusT)absStatusArg UserInfo:(NSDictionary*)userInfo;
++ (instancetype)errorWithError:(NSError*)error AbsStatus:(absStatusT)absStatusArg;
++ (instancetype)errorWithAbsStatus:(absStatusT)absStatusArg UserInfo:(NSDictionary*)userInfo;
 - (BOOL)isAbsaltError;
 - (BOOL)isAbsaltErrorWithStatus:(absStatusT)status;
 - (LogCategoryT)defaultLogCategory;

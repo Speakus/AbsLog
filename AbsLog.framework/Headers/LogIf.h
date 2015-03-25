@@ -16,43 +16,43 @@ typedef enum {
 #undef AbsLogFileMemberSeparator
 
 typedef enum {
-	LogCategoryInfo,					// debug info
-	LogCategoryNotice,					// key info
-	LogCategoryManualInitiatedWarning,
-	LogCategoryLongTimeIssue,			// it's info under debugger and Warning without
-	LogCategoryWarning,					// it's strange but it's not problem
-	LogCategoryError,
-	LogCategoryCustomMsg,				// inform customer with msg fmt 'title:msg:-hiddenmsg'
-	LogCategoryDoCrashNow,
-	LogCategoryMax,
+    LogCategoryInfo,                    // debug info
+    LogCategoryNotice,                  // key info
+    LogCategoryManualInitiatedWarning,
+    LogCategoryLongTimeIssue,           // it's info under debugger and Warning without
+    LogCategoryWarning,                 // it's strange but it's not problem
+    LogCategoryError,
+    LogCategoryCustomMsg,               // inform customer with msg fmt 'title:msg:-hiddenmsg'
+    LogCategoryDoCrashNow,
+    LogCategoryMax,
 
-	LogCategoryLastRegular = LogCategoryError,
-	LogCategoryNumBits = 4,
-	LogCategoryShift = 0,
-	LogCategoryMask = ((1 << LogCategoryNumBits) - 1) << LogCategoryShift,
+    LogCategoryLastRegular = LogCategoryError,
+    LogCategoryNumBits = 4,
+    LogCategoryShift = 0,
+    LogCategoryMask = ((1 << LogCategoryNumBits) - 1) << LogCategoryShift,
 } LogCategoryT;
 
 typedef enum {
-	LogDataNothing,
-	LogDataHex,			// long
-	LogDataDouble,		// double
-	LogDataOsStatus,	// OSStatus
-	LogDataAbsStatus,	// absStatusT
-	LogDataAppTime,		// CFAbsoluteTime
-	LogDataCStr,		// const char *
-	LogDataObjDescr,	// NSObject *
-	LogDataDump,		// const void *
-	LogDataLogableObj,  // LogableObj *
-	LogDataMax,
-	
-	LogDataNumBits	= 4,
-	LogDataShift	= LogCategoryNumBits,
-	LogDataMask = ((1 << LogDataNumBits) - 1) << LogDataShift,
+    LogDataNothing,
+    LogDataHex,         // long
+    LogDataDouble,      // double
+    LogDataOsStatus,    // OSStatus
+    LogDataAbsStatus,   // absStatusT
+    LogDataAppTime,     // CFAbsoluteTime
+    LogDataCStr,        // const char *
+    LogDataObjDescr,    // NSObject *
+    LogDataDump,        // const void *
+    LogDataLogableObj,  // LogableObj *
+    LogDataMax,
+    
+    LogDataNumBits  = 4,
+    LogDataShift    = LogCategoryNumBits,
+    LogDataMask = ((1 << LogDataNumBits) - 1) << LogDataShift,
 } LogDataT;
-	
+    
 typedef uint32_t SOURCE_LOG_T;
 typedef uint32_t LogTypeT;
-	
+    
 #if (!defined(LIB_ID))
 #error LIB_ID is not defined!
 #endif // (!defined(LIB_ID))
@@ -60,94 +60,94 @@ typedef uint32_t LogTypeT;
 // absFileIdx - usually defined via ABS_UT_CODE_FILE_BEGIN_WITH_IDX()
 #define SOURCE_LOG() ((SOURCE_LOG_T)\
 (((LIB_ID \
-	* MAX_FILES_ALLOWED + absFileIdx \
-		) * MAX_SOURCE_LINES_ALLOWED) + __LINE__) \
+    * MAX_FILES_ALLOWED + absFileIdx \
+        ) * MAX_SOURCE_LINES_ALLOWED) + __LINE__) \
 )
 
 static inline LogTypeT getLogType(LogDataT LogData, LogCategoryT LogCategory)
 {
-	return ((uint32_t)LogCategory << LogCategoryShift) + ((uint32_t)LogData << LogDataShift);
+    return ((uint32_t)LogCategory << LogCategoryShift) + ((uint32_t)LogData << LogDataShift);
 }
 
 ABS_EXTERN_C void
-log_now(SOURCE_LOG_T	sourceLog,	// contain LIB_ID, absFileIdx, __LINE__ (via macros SOURCE_LOG())
-		LogTypeT		LogType,	// created via getLogType()
-		const void *data);			// additional data (depends from type)
+log_now(SOURCE_LOG_T    sourceLog,  // contain LIB_ID, absFileIdx, __LINE__ (via macros SOURCE_LOG())
+        LogTypeT        LogType,    // created via getLogType()
+        const void *data);          // additional data (depends from type)
 
 typedef struct
 {
-	const void * pointer;
-	int size;
+    const void * pointer;
+    int size;
 } LOG_HERE_DUMP_T;
 
 #pragma mark Internal Log macroses
 // should not be used directly
 #define _ABS_LOG(LogData, LogCategory, p_data) \
-	log_now(SOURCE_LOG(), getLogType(LogData, LogCategory), p_data)
+    log_now(SOURCE_LOG(), getLogType(LogData, LogCategory), p_data)
 
 #ifndef _ABS_POSSIBLE_LOG
 #define _ABS_POSSIBLE_LOG() DO_NOTHING()
 #endif
-	
+    
 #pragma mark Log macroses
 #define LOG_IF(condition, LogCategory) \
-	if (condition) { \
-		_ABS_LOG(LogDataNothing, LogCategory, NULL); \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) { \
+        _ABS_LOG(LogDataNothing, LogCategory, NULL); \
+    } else _ABS_POSSIBLE_LOG()
 
 #define LOG_STR_IF(condition, LogCategory, cstr) \
-	if (condition) { \
-		const char * abs_log_d = (cstr); /* check for correct argument type */ \
-		_ABS_LOG(LogDataCStr, LogCategory, abs_log_d); \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) { \
+        const char * abs_log_d = (cstr); /* check for correct argument type */ \
+        _ABS_LOG(LogDataCStr, LogCategory, abs_log_d); \
+    } else _ABS_POSSIBLE_LOG()
 
 #define LOG_NUM_IF(condition, LogCategory, num) \
-	if (condition) { \
-		double abs_log_d = (num); /* check for correct argument type */ \
-		_ABS_LOG(LogDataDouble, LogCategory, &abs_log_d); \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) { \
+        double abs_log_d = (num); /* check for correct argument type */ \
+        _ABS_LOG(LogDataDouble, LogCategory, &abs_log_d); \
+    } else _ABS_POSSIBLE_LOG()
 
 #define LOG_HEX_IF(condition, LogCategory, num) \
-	if (condition) { \
-		uint64_t abs_log_d = (num); /* check for correct argument type */ \
-		_ABS_LOG(LogDataHex, LogCategory, &abs_log_d); \
-	} else _ABS_POSSIBLE_LOG()
-	
+    if (condition) { \
+        uint64_t abs_log_d = (num); /* check for correct argument type */ \
+        _ABS_LOG(LogDataHex, LogCategory, &abs_log_d); \
+    } else _ABS_POSSIBLE_LOG()
+    
 #define LOG_ABS_TIME_IF(condition, LogCategory, absTime) \
-	if (condition) { \
-		CFAbsoluteTime abs_log_d = (absTime); /* check for correct argument type */ \
-		_ABS_LOG(LogDataAppTime, LogCategory, &abs_log_d); \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) { \
+        CFAbsoluteTime abs_log_d = (absTime); /* check for correct argument type */ \
+        _ABS_LOG(LogDataAppTime, LogCategory, &abs_log_d); \
+    } else _ABS_POSSIBLE_LOG()
 
 // pass NSString for fast or NSAutoreleasedPool will be created and drained in this point
 #define LOG_OBJC_IF(condition, LogCategory, object) \
-	if (condition) { \
-		NSObject * abs_log_data = (object); /* check for correct argument type */ \
+    if (condition) { \
+        NSObject * abs_log_data = (object); /* check for correct argument type */ \
         const void * abs_log_d = objc_unretainedPointer(abs_log_data); \
-		_ABS_LOG(LogDataObjDescr, LogCategory, abs_log_d); \
-	} else _ABS_POSSIBLE_LOG()
-		
+        _ABS_LOG(LogDataObjDescr, LogCategory, abs_log_d); \
+    } else _ABS_POSSIBLE_LOG()
+        
 #define LOG_OS_STATUS_FAIL(LogCategory, os_status) \
-	do { \
-		OSStatus abs_log_d = (os_status); /* check for correct argument type */ \
-		if (noErr != abs_log_d) { \
-			_ABS_LOG(LogDataOsStatus, LogCategory, &abs_log_d); \
-		} else _ABS_POSSIBLE_LOG(); \
-	} while (0)
+    do { \
+        OSStatus abs_log_d = (os_status); /* check for correct argument type */ \
+        if (noErr != abs_log_d) { \
+            _ABS_LOG(LogDataOsStatus, LogCategory, &abs_log_d); \
+        } else _ABS_POSSIBLE_LOG(); \
+    } while (0)
 
 #define LOG_ABS_STATUS_IF(condition, LogCategory, abs_status) \
-	if (condition) { \
-		absStatusT abs_log_d = (abs_status); /* check for correct argument type */ \
-		_ABS_LOG(LogDataAbsStatus, LogCategory, &abs_log_d); \
-	} else _ABS_POSSIBLE_LOG()
-	
+    if (condition) { \
+        absStatusT abs_log_d = (abs_status); /* check for correct argument type */ \
+        _ABS_LOG(LogDataAbsStatus, LogCategory, &abs_log_d); \
+    } else _ABS_POSSIBLE_LOG()
+    
 #define LOG_ABS_STATUS_FAIL(LogCategory, abs_status) \
-	do { \
-		absStatusT abs_log_d = (abs_status); /* check for correct argument type */ \
-		if (absStatusOk != abs_log_d) { \
-			_ABS_LOG(LogDataAbsStatus, LogCategory, &abs_log_d); \
-		} else _ABS_POSSIBLE_LOG(); \
-	} while (0)
+    do { \
+        absStatusT abs_log_d = (abs_status); /* check for correct argument type */ \
+        if (absStatusOk != abs_log_d) { \
+            _ABS_LOG(LogDataAbsStatus, LogCategory, &abs_log_d); \
+        } else _ABS_POSSIBLE_LOG(); \
+    } while (0)
 
 #if !defined(__cplusplus)
 #define LOG_DUMP_IF(condition, LogCategory, ptr_arg, size_arg) \
@@ -166,13 +166,13 @@ typedef struct
         _ABS_LOG(LogDataDump, LogCategory, &data); \
     } else _ABS_POSSIBLE_LOG()
 #endif // defined(__cplusplus)
-		
+        
 #define LOG_CPP_IF(condition, LogCategory, p_object) \
-	if (condition) \
-	{ \
-		const LogableObj * abs_log_data = (p_object); /* check for correct argument type */ \
-		_ABS_LOG(LogDataLogableObj, LogCategory, abs_log_data); \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) \
+    { \
+        const LogableObj * abs_log_data = (p_object); /* check for correct argument type */ \
+        _ABS_LOG(LogDataLogableObj, LogCategory, abs_log_data); \
+    } else _ABS_POSSIBLE_LOG()
 
 static inline uint64_t hexFromStatusAndErrno(int32_t status, int32_t errnoArg) {
     uint64_t result = (uint32_t)errnoArg;
@@ -195,32 +195,32 @@ static inline uint64_t hexFrom2uint32(uint32_t first, uint32_t second) {
 #define ONE_LOOP_END while (0);
 
 #define BREAK_LOG_IF(condition, LogCategory) \
-	if (condition) \
-	{ \
-		LOG_IF(1, LogCategory); \
-		break; \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) \
+    { \
+        LOG_IF(1, LogCategory); \
+        break; \
+    } else _ABS_POSSIBLE_LOG()
 
 #define BREAK_LOG_STR_IF(condition, LogCategory, cstr) \
-	if (condition) \
-	{ \
-		LOG_STR_IF(1, LogCategory, cstr); \
-		break; \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) \
+    { \
+        LOG_STR_IF(1, LogCategory, cstr); \
+        break; \
+    } else _ABS_POSSIBLE_LOG()
 
 #define BREAK_LOG_OBJC_IF(condition, LogCategory, object) \
-	if (condition) \
-	{ \
-		LOG_OBJC_IF(1, LogCategory, object); \
-		break; \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) \
+    { \
+        LOG_OBJC_IF(1, LogCategory, object); \
+        break; \
+    } else _ABS_POSSIBLE_LOG()
 
 #define BREAK_LOG_NUM_IF(condition, LogCategory, num) \
-	if (condition) \
-	{ \
-		LOG_NUM_IF(1, LogCategory, num); \
-		break; \
-	} else _ABS_POSSIBLE_LOG()
+    if (condition) \
+    { \
+        LOG_NUM_IF(1, LogCategory, num); \
+        break; \
+    } else _ABS_POSSIBLE_LOG()
 
 #define BREAK_LOG_HEX_IF(condition, LogCategory, num) \
     if (condition) \
@@ -231,15 +231,15 @@ static inline uint64_t hexFrom2uint32(uint32_t first, uint32_t second) {
 
 #pragma mark break without LOG macroses
 #define BREAK_ON(condition) \
-	if (condition) { \
-		break; \
-	} else DO_NOTHING()
+    if (condition) { \
+        break; \
+    } else DO_NOTHING()
 
 #define BREAK_SAVE_IF(condition, sourceLogVar) \
-	if (condition) { \
-		(sourceLogVar) = SOURCE_LOG(); \
-		break; \
-	} else DO_NOTHING()
+    if (condition) { \
+        (sourceLogVar) = SOURCE_LOG(); \
+        break; \
+    } else DO_NOTHING()
 
 ABS_HEADER_C_END
 

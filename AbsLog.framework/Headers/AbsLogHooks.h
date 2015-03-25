@@ -8,26 +8,26 @@
 ABS_HEADER_C_BEGIN
 
 typedef enum {
-	// helpers
-	AbsLogCategoryBitNone		= 0,
-	AbsLogCategoryBitJustLog	= (1 << LogCategoryNotice) + (1 << LogCategoryInfo),
-	AbsLogCategoryBitNoIssue	= AbsLogCategoryBitJustLog | (1 << LogCategoryManualInitiatedWarning),
-	AbsLogCategoryBitAll		= (1 << LogCategoryMax) - 1,
+    // helpers
+    AbsLogCategoryBitNone       = 0,
+    AbsLogCategoryBitJustLog    = (1 << LogCategoryNotice) + (1 << LogCategoryInfo),
+    AbsLogCategoryBitNoIssue    = AbsLogCategoryBitJustLog | (1 << LogCategoryManualInitiatedWarning),
+    AbsLogCategoryBitAll        = (1 << LogCategoryMax) - 1,
 
-	AbsLogCategoryBitDoCrash	= (1 << LogCategoryDoCrashNow),
-	AbsLogCategoryBitTimeIssue	= (1 << LogCategoryLongTimeIssue),
-	AbsLogCategoryBitSomeIssue	= (AbsLogCategoryBitAll & ~AbsLogCategoryBitNoIssue),
-	AbsLogCategoryBitSomeAlert	= (AbsLogCategoryBitAll & ~AbsLogCategoryBitJustLog),
+    AbsLogCategoryBitDoCrash    = (1 << LogCategoryDoCrashNow),
+    AbsLogCategoryBitTimeIssue  = (1 << LogCategoryLongTimeIssue),
+    AbsLogCategoryBitSomeIssue  = (AbsLogCategoryBitAll & ~AbsLogCategoryBitNoIssue),
+    AbsLogCategoryBitSomeAlert  = (AbsLogCategoryBitAll & ~AbsLogCategoryBitJustLog),
 } AbsLogCategoryBitT;
 
 enum {
-	AbsLogHookPriorityMin		= 1,
-	AbsLogHookPriorityLow		= 64,
-	AbsLogHookPriorityDefault	= 128, // for regular log to file
+    AbsLogHookPriorityMin       = 1,
+    AbsLogHookPriorityLow       = 64,
+    AbsLogHookPriorityDefault   = 128, // for regular log to file
     AbsLogHookPriorityAboveNorm = 160,
-	AbsLogHookPriorityHigh		= 192,
+    AbsLogHookPriorityHigh      = 192,
     AbsLogHookPriorityVeryHigh  = 224, // for debug proposal
-	AbsLogHookPriorityMax		= 255, // for debug proposal
+    AbsLogHookPriorityMax       = 255, // for debug proposal
 };
 typedef int AbsLogHookPriorityT;
 

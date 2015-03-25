@@ -22,12 +22,12 @@ ABS_EXTERN_C const char * get_log_start_time(void);
 
 static inline LogDataT getLogData(LogTypeT typeLog)
 {
-	return (LogDataT)((typeLog & LogDataMask) >> LogDataShift);
+    return (LogDataT)((typeLog & LogDataMask) >> LogDataShift);
 }
 
 static inline LogCategoryT getLogCategory(LogTypeT typeLog)
 {
-	return (LogCategoryT)((typeLog & LogCategoryMask) >> LogCategoryShift);
+    return (LogCategoryT)((typeLog & LogCategoryMask) >> LogCategoryShift);
 }
 
 ABS_HEADER_C_END
